@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import slo.slo_spring_server.domain.Person;
+import slo.slo_spring_server.domain.user.User;
 import slo.slo_spring_server.service.PersonService;
 
 @Controller
@@ -18,7 +18,7 @@ public class PersonController {
     }
     @GetMapping("")
     public String homePage(Model model) {
-        model.addAttribute("person", new Person());
+        model.addAttribute("person", new User());
         return "makePerson";
     }
 
@@ -29,8 +29,8 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/person", method = RequestMethod.POST)
-    public String addPagePerson(@ModelAttribute Person person, Model model) {
-        personService.createPerson(person);
+    public String addPagePerson(@ModelAttribute User user, Model model) {
+        personService.createPerson(user);
         model.addAttribute("persons", personService.getAllPersons());
 
         return "result";

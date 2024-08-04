@@ -1,10 +1,8 @@
 package slo.slo_spring_server.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import slo.slo_spring_server.domain.Person;
+import slo.slo_spring_server.domain.user.User;
 import slo.slo_spring_server.repository.PersonRepository;
 
 import java.util.List;
@@ -16,8 +14,8 @@ public class PersonServiceImpl implements PersonService {
     private PersonRepository personRepository;
 
     @Override
-    public Person createPerson(Person person) {
-        return personRepository.save(person);
+    public User createPerson(User user) {
+        return personRepository.save(user);
     }
 
     @Override
@@ -26,7 +24,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<Person> getAllPersons() {
+    public List<User> getAllPersons() {
         return personRepository.findAll();
     }
 }

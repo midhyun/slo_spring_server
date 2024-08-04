@@ -1,12 +1,12 @@
 package slo.slo_spring_server.service;
 
-import slo.slo_spring_server.domain.Person;
+import slo.slo_spring_server.domain.user.User;
 
 import java.util.List;
 
 
 public interface PersonService {
-    Person createPerson(Person person);
+    User createPerson(User user);
     void deletePerson(Long id);
-    List<Person> getAllPersons();
+    List<User> getAllPersons();
 }

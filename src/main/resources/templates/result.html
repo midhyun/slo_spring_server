@@ -13,12 +13,12 @@
             <th>Name</th>
             <th>Password</th>
         </tr>
-        <tr th:each="person : ${persons}">
-            <td th:text="${person.id}"></td>
-            <td th:text="${person.name}"></td>
-<!--            <td th:text="${person.password}"></td>-->
+        <tr th:each="user : ${persons}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+<!--            <td th:text="${user.password}"></td>-->
             <td>
-                <a th:href="@{/person/delete/{id}(id=${person.id})}">
+                <a th:href="@{/user/delete/{id}(id=${user.id})}">
                     <button>회원삭제</button>
                 </a>
             </td>
