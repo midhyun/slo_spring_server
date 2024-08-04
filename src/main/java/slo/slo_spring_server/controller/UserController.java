@@ -5,40 +5,40 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import slo.slo_spring_server.domain.user.User;
-import slo.slo_spring_server.service.PersonService;
+import slo.slo_spring_server.service.UserService;
 
 @Controller
-public class PersonController {
+public class UserController {
 
-    private final PersonService personService;
+    private final UserService personService;
 
     @Autowired
-    public PersonController(PersonService personService) {
+    public UserController(UserService personService) {
         this.personService = personService;
     }
     @GetMapping("")
     public String homePage(Model model) {
         model.addAttribute("person", new User());
-        return "makePerson";
+        return "makeUser";
     }
 
     @GetMapping("/person")
-    public String getPagePerson(Model model) {
-        model.addAttribute("persons", personService.getAllPersons());
+    public String getPageUser(Model model) {
+        model.addAttribute("persons", personService.getAllUsers());
         return "result";
     }
 
     @RequestMapping(value = "/person", method = RequestMethod.POST)
-    public String addPagePerson(@ModelAttribute User user, Model model) {
-        personService.createPerson(user);
-        model.addAttribute("persons", personService.getAllPersons());
+    public String addPageUser(@ModelAttribute User user, Model model) {
+        personService.createUser(user);
+        model.addAttribute("persons", personService.getAllUsers());
 
         return "result";
     }
 
     @GetMapping("/person/delete/{id}")
-    public String deletePagePerson(@PathVariable Long id) {
-        personService.deletePerson(id);
+    public String deletePageUser(@PathVariable Long id) {
+        personService.deleteUser(id);
         return "redirect:/person";
     }
 

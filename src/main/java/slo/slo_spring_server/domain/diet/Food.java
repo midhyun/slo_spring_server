@@ -6,11 +6,12 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import slo.slo_spring_server.domain.BaseTimeEntity;
 
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-public class Food {
+public class Food extends BaseTimeEntity {
 
     @Id
     @GeneratedValue
