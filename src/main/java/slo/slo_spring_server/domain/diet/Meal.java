@@ -20,7 +20,7 @@ public class Meal extends BaseTimeEntity {
     private Food food;
 
     @ManyToOne
-    @Column(nullable = false, name = "diet_id")
+    @JoinColumn(nullable = false, name = "diet_id")
     private Diet diet;
 
     // 0: quantity gram, 1: quantity 인분

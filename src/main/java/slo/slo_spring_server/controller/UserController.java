@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import slo.slo_spring_server.domain.user.User;
 import slo.slo_spring_server.service.UserService;
 
-@Controller
+@Controller()
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService personService;
@@ -16,6 +17,7 @@ public class UserController {
     public UserController(UserService personService) {
         this.personService = personService;
     }
+
     @GetMapping("")
     public String homePage(Model model) {
         model.addAttribute("person", new User());

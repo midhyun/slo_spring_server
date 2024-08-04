@@ -18,8 +18,8 @@ public class Diet extends BaseTimeEntity {
     @GeneratedValue
     private Long id;
 
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
-    @ManyToOne
     private User user;
 
     @Column(name = "diet_date")
