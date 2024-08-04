@@ -19,7 +19,7 @@ public class User extends BaseTimeEntity {
     private Long id;
 
     @Column
-    private String name;
+    private String userName;
 
     @Column
     private int age;
