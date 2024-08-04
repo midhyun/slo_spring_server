@@ -18,30 +18,4 @@ public class UserController {
         this.personService = personService;
     }
 
-    @GetMapping("")
-    public String homePage(Model model) {
-        model.addAttribute("person", new User());
-        return "makeUser";
-    }
-
-    @GetMapping("/person")
-    public String getPageUser(Model model) {
-        model.addAttribute("persons", personService.getAllUsers());
-        return "result";
-    }
-
-    @RequestMapping(value = "/person", method = RequestMethod.POST)
-    public String addPageUser(@ModelAttribute User user, Model model) {
-        personService.createUser(user);
-        model.addAttribute("persons", personService.getAllUsers());
-
-        return "result";
-    }
-
-    @GetMapping("/person/delete/{id}")
-    public String deletePageUser(@PathVariable Long id) {
-        personService.deleteUser(id);
-        return "redirect:/person";
-    }
-
 }
