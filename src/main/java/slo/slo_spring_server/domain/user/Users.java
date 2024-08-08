@@ -9,11 +9,10 @@ import slo.slo_spring_server.domain.BaseTimeEntity;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User extends BaseTimeEntity {
+public class Users extends BaseTimeEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "user_id")
     private Long id;
 
     @Column(nullable = false, length = 30, unique = true)
@@ -52,7 +51,7 @@ public class User extends BaseTimeEntity {
         this.age = age;
     }
 
-    public User updateModifiedDate() {
+    public Users updateModifiedDate() {
         this.onPreUpdate();
         return this;
     }

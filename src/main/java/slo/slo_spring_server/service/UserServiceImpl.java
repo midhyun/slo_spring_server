@@ -1,12 +1,11 @@
 package slo.slo_spring_server.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import slo.slo_spring_server.domain.user.User;
+import slo.slo_spring_server.domain.user.Users;
 import slo.slo_spring_server.dto.UserDTO;
 import slo.slo_spring_server.repository.user.UserRepository;
 
@@ -30,10 +29,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void updateUser(UserDTO.Request dto) {
-        User user = userRepository.findById(dto.getId()).orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다."));
+        Users users = userRepository.findById(dto.getId()).orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다."));
 
         String encPassword = encoder.encode(dto.getPassword());
-        user.modifyInfo(encPassword, dto.getNickname(), dto.getWeight(), dto.getHeight(), dto.getAge());
+        users.modifyInfo(encPassword, dto.getNickname(), dto.getWeight(), dto.getHeight(), dto.getAge());
     }
 
 //    회원가입 유효성 검사 에러 핸들링
@@ -56,7 +55,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<Users> getAllUsers() {
         return userRepository.findAll();
     }
 }

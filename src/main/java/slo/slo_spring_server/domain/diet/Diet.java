@@ -5,13 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import slo.slo_spring_server.domain.BaseTimeEntity;
-import slo.slo_spring_server.domain.user.User;
+import slo.slo_spring_server.domain.user.Users;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
 @NoArgsConstructor
+@Table(indexes = {
+        @Index(name = "idx_diet_table", columnList = "diet_date, user_id")
+})
 public class Diet extends BaseTimeEntity {
 
     @Id
@@ -20,7 +23,7 @@ public class Diet extends BaseTimeEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
-    private User user;
+    private Users users;
 
     @Column(name = "diet_date")
     private LocalDateTime dietDate;
