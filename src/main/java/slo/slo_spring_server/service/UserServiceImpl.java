@@ -1,27 +1,33 @@
 package slo.slo_spring_server.service;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import slo.slo_spring_server.domain.user.Users;
+import slo.slo_spring_server.domain.user.User;
 import slo.slo_spring_server.dto.UserDTO;
+import slo.slo_spring_server.exception.DuplicateUserException;
 import slo.slo_spring_server.repository.user.UserRepository;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private PasswordEncoder encoder;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder encoder;
 
     @Override
     @Transactional
     public void createUser(UserDTO.Request dto) {
+        boolean isExist = userRepository.existsByUsername(dto.getUsername());
+        existUser(dto.getUsername());
+
         dto.setPassword(encoder.encode(dto.getPassword()));
         userRepository.save(dto.toEntity());
     }
@@ -29,10 +35,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void updateUser(UserDTO.Request dto) {
-        Users users = userRepository.findById(dto.getId()).orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다."));
+        User user = userRepository.findById(dto.getId()).orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다."));
 
         String encPassword = encoder.encode(dto.getPassword());
-        users.modifyInfo(encPassword, dto.getNickname(), dto.getWeight(), dto.getHeight(), dto.getAge());
+        user.modifyInfo(encPassword, dto.getNickname(), dto.getWeight(), dto.getHeight(), dto.getAge());
     }
 
 //    회원가입 유효성 검사 에러 핸들링
@@ -55,7 +61,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Users> getAllUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    private void existUser(String username) {
+        userRepository.findByUsername(username).ifPresent(exist -> {
+            throw new DuplicateUserException("이미 존재하는 회원입니다:" + username);
+        });
     }
 }

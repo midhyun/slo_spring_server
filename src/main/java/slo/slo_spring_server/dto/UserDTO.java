@@ -6,7 +6,7 @@ import lombok.*;
 import slo.slo_spring_server.domain.user.Gender;
 import slo.slo_spring_server.domain.user.Role;
 import slo.slo_spring_server.domain.user.Status;
-import slo.slo_spring_server.domain.user.Users;
+import slo.slo_spring_server.domain.user.User;
 import slo.slo_spring_server.exception.ValidEnum;
 
 public class UserDTO {
@@ -44,8 +44,8 @@ public class UserDTO {
         private int height;
         private int age;
 
-        public Users toEntity() {
-            return Users.builder()
+        public User toEntity() {
+            return User.builder()
                     .id(id)
                     .username(username)
                     .password(password)
@@ -53,7 +53,7 @@ public class UserDTO {
                     .email(email)
                     .role(Role.USER)
                     .gender(gender)
-                    .status(status)
+                    .status(Status.ACT)
                     .weight(weight)
                     .height(height)
                     .age(age)

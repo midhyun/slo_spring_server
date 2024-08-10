@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import slo.slo_spring_server.domain.BaseTimeEntity;
-import slo.slo_spring_server.domain.user.Users;
+import slo.slo_spring_server.domain.user.User;
 
 import java.time.LocalDateTime;
 
@@ -23,7 +23,7 @@ public class Diet extends BaseTimeEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
-    private Users users;
+    private User users;
 
     @Column(name = "diet_date")
     private LocalDateTime dietDate;

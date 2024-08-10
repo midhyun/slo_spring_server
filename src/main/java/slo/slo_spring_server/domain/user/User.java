@@ -1,5 +1,6 @@
 package slo.slo_spring_server.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import slo.slo_spring_server.domain.BaseTimeEntity;
@@ -9,8 +10,10 @@ import slo.slo_spring_server.domain.BaseTimeEntity;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Users extends BaseTimeEntity {
+@Table(name = "USERS")
+public class User extends BaseTimeEntity {
 
+    @JsonIgnore
     @Id
     @GeneratedValue
     private Long id;
@@ -18,6 +21,7 @@ public class Users extends BaseTimeEntity {
     @Column(nullable = false, length = 30, unique = true)
     private String username;
 
+    @JsonIgnore
     @Column(length = 100)
     private String password;
 
@@ -51,7 +55,7 @@ public class Users extends BaseTimeEntity {
         this.age = age;
     }
 
-    public Users updateModifiedDate() {
+    public User updateModifiedDate() {
         this.onPreUpdate();
         return this;
     }

@@ -2,18 +2,18 @@ package slo.slo_spring_server.repository.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import slo.slo_spring_server.domain.user.Users;
+import slo.slo_spring_server.domain.user.User;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<Users, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 //    Security
-    Optional<Users> findByUsername(String username);
+    Optional<User> findByUsername(String username);
 //    Oauth
-    Optional<Users> findByEmail(String email);
-//    user GET
-    Users findByNickname(String nickname);
+    Optional<User> findByEmail(String email);
+//    User GET
+    User findByNickname(String nickname);
 
 //    duplicate validation
     boolean existsByUsername(String username);
