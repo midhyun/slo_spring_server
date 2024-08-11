@@ -66,8 +66,10 @@ public class UserServiceImpl implements UserService {
     }
 
     private void existUser(String username) {
-        userRepository.findByUsername(username).ifPresent(exist -> {
+    User exist = userRepository.findByUsername(username);
+
+    if (exist != null)  {
             throw new DuplicateUserException("이미 존재하는 회원입니다:" + username);
-        });
+        };
     }
 }

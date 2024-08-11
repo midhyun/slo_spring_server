@@ -14,6 +14,7 @@ public class UserController {
 
     @PostMapping("/join")
     public String joinProcess(UserDTO.Request userDTO) {
+        System.out.println(userDTO.getEmail());
         userService.createUser(userDTO);
 
         return "ok";
