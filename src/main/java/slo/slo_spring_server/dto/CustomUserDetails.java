@@ -2,7 +2,9 @@ package slo.slo_spring_server.dto;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
 import slo.slo_spring_server.domain.user.User;
 
 import java.util.ArrayList;
@@ -17,13 +19,11 @@ public class CustomUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return "ROLE_" + user.getRole().toString();
-            }
-        });
-
+        String roles = user.getRole().getValue();
+        for(String role : roles.split(",")){
+            if (!StringUtils.hasText(role)) continue;
+            authorities.add(new SimpleGrantedAuthority(role));
+        }
         return authorities;
     }
 

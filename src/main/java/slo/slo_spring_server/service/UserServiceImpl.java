@@ -1,14 +1,17 @@
 package slo.slo_spring_server.service;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
+import slo.slo_spring_server.domain.user.Role;
 import slo.slo_spring_server.domain.user.User;
 import slo.slo_spring_server.dto.UserDTO;
 import slo.slo_spring_server.exception.DuplicateUserException;
+import slo.slo_spring_server.jwt.JwtUtil;
 import slo.slo_spring_server.repository.user.UserRepository;
 
 import java.util.HashMap;
@@ -21,6 +24,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
+    private final JwtUtil jwtUtil;
 
     @Override
     @Transactional
@@ -63,6 +67,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public String refreshToken(String refreshToken) {
+
+        if (jwtUtil.isExpired(refreshToken)) {
+            return "";
+        }
+
+        if (!jwtUtil.getCategory(refreshToken).equals("refresh")) {
+            return "";
+        }
+
+        String username = jwtUtil.getUsername(refreshToken);
+        String role = jwtUtil.getRole(refreshToken);
+
+        return jwtUtil.createJwt("refresh", username, role, 60000L);
     }
 
     private void existUser(String username) {
