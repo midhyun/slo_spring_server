@@ -68,18 +68,25 @@ public class SecurityConfig {
                 .httpBasic((auth) -> auth.disable());
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/", "/join").permitAll()
+                        .requestMatchers("/api/auth/login", "/", "/join").permitAll()
                         .requestMatchers("/reissue").permitAll()
                         .requestMatchers("/admin").hasRole("USER")
                         .anyRequest().authenticated());
         http
                 .addFilterBefore(new JwtFilter(jwtUtil), LoginFilter.class);
         http
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                .addFilterAt(SetLoginFilter(authenticationConfiguration.getAuthenticationManager(), jwtUtil), UsernamePasswordAuthenticationFilter.class);
         http
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
+    }
+
+    public LoginFilter SetLoginFilter(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+        LoginFilter loginFilter = new LoginFilter(authenticationManager, jwtUtil);
+        loginFilter.setFilterProcessesUrl("/api/auth/login");
+
+        return loginFilter;
     }
 }
