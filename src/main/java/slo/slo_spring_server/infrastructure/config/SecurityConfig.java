@@ -68,7 +68,7 @@ public class SecurityConfig {
                 .httpBasic((auth) -> auth.disable());
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/api/auth/login", "/", "/join").permitAll()
+                        .requestMatchers("/auth/login", "/", "auth/join").permitAll()
                         .requestMatchers("/reissue").permitAll()
                         .requestMatchers("/admin").hasRole("USER")
                         .anyRequest().authenticated());
@@ -85,7 +85,7 @@ public class SecurityConfig {
 
     public LoginFilter SetLoginFilter(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
         LoginFilter loginFilter = new LoginFilter(authenticationManager, jwtUtil);
-        loginFilter.setFilterProcessesUrl("/api/auth/login");
+        loginFilter.setFilterProcessesUrl("/auth/login");
 
         return loginFilter;
     }

@@ -1,4 +1,4 @@
-package slo.slo_spring_server.controller;
+package slo.slo_spring_server.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
@@ -6,14 +6,21 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.http.MediaType;
 import slo.slo_spring_server.domain.user.Gender;
 import slo.slo_spring_server.domain.user.Status;
 import slo.slo_spring_server.domain.user.User;
 import slo.slo_spring_server.dto.UserDTO;
 import slo.slo_spring_server.repository.user.UserRepository;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @DataJpaTest
 @RequiredArgsConstructor
+@AutoConfigureMockMvc
 class UserRepositoryTest {
 
     @Autowired

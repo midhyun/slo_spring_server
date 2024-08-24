@@ -1,13 +1,11 @@
 package slo.slo_spring_server.service;
 
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import slo.slo_spring_server.domain.user.Role;
 import slo.slo_spring_server.domain.user.User;
 import slo.slo_spring_server.dto.UserDTO;
 import slo.slo_spring_server.exception.DuplicateUserException;
@@ -29,8 +27,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void createUser(UserDTO.Request dto) {
-        boolean isExist = userRepository.existsByUsername(dto.getUsername());
-        existUser(dto.getUsername());
+        existUser(dto.getUsername()); // 유저 중복확인.
 
         dto.setPassword(encoder.encode(dto.getPassword()));
         userRepository.save(dto.toEntity());

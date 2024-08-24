@@ -14,8 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import slo.slo_spring_server.domain.user.Role;
-import slo.slo_spring_server.dto.CustomUserDetails;
 
 import java.util.Collection;
 import java.util.Iterator;

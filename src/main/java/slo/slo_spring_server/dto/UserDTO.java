@@ -1,5 +1,6 @@
 package slo.slo_spring_server.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
@@ -9,6 +10,7 @@ import slo.slo_spring_server.domain.user.Status;
 import slo.slo_spring_server.domain.user.User;
 import slo.slo_spring_server.exception.ValidEnum;
 
+@Valid
 public class UserDTO {
 
     @Data
